@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Med Alert{% endblock %}
+{% block content %}
+{% if complete == 1 %}
+    <div class="container">
+        <div class="alert alert-success mt-4" role="alert">
+            <h2 class="alert-heading text-center"> Thank You! </h2>
+            <hr>
+            <p class="text-center"> Your report has successfully been submitted! </p>
+        </div>
+    </div>
+{% endif %}
+<div class="col-md-8 mx-auto social-container my-2 order-md-1" style="background-color: #BCE9EE; padding: 20px;">
+    <div class="text-center">
+        <h1><b>Welcome to MedAlert</b></h1>
+        <h5 class="mb-4">The reporting site for student patients on-Grounds.</h5>
+    </div>
+   <div class = "bg-image d-flex justify-content-center align-items-center position-relative">
+            <img src="{% static 'studenthealth.jpg' %}" alt="UVA Student Health" class="img-fluid" style="max-width: 100%; max-height: 100%;">
+            <div class="mask" style="background-color: hsla(0, 0%, 0%, 0.55); position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
+            <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100">
+                <p class="text-white mb-0" style="font-weight: bold; text-align: center; font-size: 1.3rem;">Welcome to MedAlert, the reporting site for student patients on-Grounds.</p>
+            </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6 mb-4 mt-5">
+            <div class="bg-light p-3 rounded">
+                <h5><b>Why Login?</b></h5>
+                <p>By logging in, you gain access to the following features:</p>
+                <ul>
+                    <li>View: See all your previous reports.</li>
+                    <li>Edit: Make updates or corrections to your submitted reports.</li>
+                    <li>Track Progress: Monitor the status and progress of your reports.</li>
+                </ul>
+                <div class="col text-center">
+                    <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}" class="btn btn-light btn-lg mt-3 mr-4">
+                      <img src="https://img.icons8.com/color/32/000000/google-logo.png" alt="Google Logo" style="margin-right: 5px; width: 32px; height: 32px;">
+                      Login to Your Page
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4 mt-5">
+            <div class="bg-light p-3 rounded">
+                <h5><b>Why Remain Anonymous?</b></h5>
+                <p>If you choose to remain anonymous:</p>
+                <ul>
+                    <li>Your report won't be associated with you.</li>
+                    <li>You won't have access to view or edit your previous reports.</li>
+                </ul>
+                <div class="col text-center">
+                    <a href="{% url 'uploadfiles'  %}" class="btn btn-light btn-lg mt-3">
+                        <i class="fas fa-file" style="margin-right: 5px; width: 32px; height: 32px;"></i> Anonymously Report an Incident
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4 text-center">
+        <div class="container-fluid rounded">
+            <div class="col text-center">
+                <br>
+                MedAlert receives complaints from current UVA students regarding healthcare practitioners within the UVA Health system who may have violated a regulation or law.
+           <br><br>   <h4> How it works:</h4>
+                <ol class="text-start">
+                    <li class="mb-2">Submit a report with as much relevant information as you can. This includes the name of the practitioner, the time and location of the incident, a detailed summary of your concerns, and any related documents. The more information you provide, the better we can help you.</li>
+                    <li class="mb-2">A member of our staff will closely examine your report and open an investigation. If you submitted non-anonymously, your report will be marked “In Progress”. During this time, you can still make edits to your report by attaching new documents or providing new information.</li>
+                    <li>We will update you with a summary of our actions after the investigation, and any further steps that need to be taken on your part. If you submitted non-anonymously, your report will be marked “Resolved”. You are no longer able to edit your report at this time.</li>
+                </ol><br>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content%}
+      

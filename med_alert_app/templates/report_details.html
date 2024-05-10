@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Report Details{% endblock %}
+{% block content %}
+<h4 class="text-center"></h4>
+<body>
+    <h1>{{ report.title }}</h1>
+    <p><b>Reported by: </b>
+       {% if report.user.is_authenticated%}
+        {{ report.user.username }}
+        {%else%}
+        Anonymous
+        {%endif%}
+    </p>
+    <p><b>Date/Time of Offense: </b>{{ report.date_time_of_offense }}</p>
+    <p><b>Location: </b>{{ report.location }}</p>
+    <p><b>Name of Offender(s): </b>{{ report.offenders_names }}</p>
+    <p><b>Description: </b>{{ report.offense_description }}</p>
+    <p><b>Action Desired: </b>{{ report.action_desired }}</p>
+    <p><b>Resolution: </b>{{ report.resolved_action }}</p>
+
+    <h2>Uploaded Documents</h2>
+    {% if documents %}
+        {% for document in documents %}
+            {% if document.upload.name != 'path/to/default/file.pdf' %}
+                <br><object data="{{ document.upload.url }}"style="height: 800px;"></object><br>
+                <a href="{{ document.upload.url }}">Download {{ document.upload.name }}</a>
+            {% else %}
+                <p>None</p>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>None</p>
+    {% endif %}
+
+    {% if user.is_authenticated and report.user == user and report.completed == 0%}
+        <a href="{% url 'edit_report' report_id=report.id %}" class="styled-button">Edit Report</a>
+    {% endif %}
+</body>
+{% endblock %}

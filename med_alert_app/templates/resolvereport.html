@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Report{% endblock %}
+{% block content %}
+<h4 class="text-center">Resolve Report</h4>
+    <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="resolved_action">What action was taken to resolve this report?</label>
+                <textarea class="form-control" id="resolved_action" name="resolved_action" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+{% endblock %}

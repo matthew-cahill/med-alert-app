@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Edit Report{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12 mb-3">
+            {% if request.user.is_authenticated %}
+                <h4 class="text-center">{{ user.first_name }} {{ user.last_name }} is editing their report. Please update the following information:</h4>
+            {% else %}
+                <h4 class="text-center">You are editing your report anonymously. Please update the following information:</h4>
+            {% endif %}
+        </div>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="col-sm-12 mb-3">
+            <h6>Upload a .pdf, .txt, or .jpg file below associated with your report if applicable:</h6>
+            <input type="file" name="file">
+        </div>
+
+        <div class="input-group input-group-sm mb-3 mt-3" style="width: 425px">
+            <span class="input-group-text">Name of Offender(s):</span>
+            <input type="text" class="form-control input-sm" placeholder="Name" id="offenders_names" name="offenders_names" value="{{ form.offenders_names.value }}">
+        </div>
+
+        <div class="input-group mb-3" style="width: 800px">
+            <span class="input-group-text">Location:</span>
+            <input type="text" class="form-control" placeholder="Incident Location" id="location" name="location" value="{{ form.location.value }}">
+        </div>
+
+        <label for="date_time_of_offense">Date and Time of Offense:</label><br>
+        <div class="input-group mb-3">
+            <input type="datetime-local" id="date_time_of_offense" name="date_time_of_offense" value="{{ form.date_time_of_offense.value }}"><br>
+        </div>
+
+        <label for="offense_description">Offense Description:</label><br>
+        <div class="input-group mb-3">
+            <textarea class="form-control" rows="5" id="offense_description" name="offense_description">{{ form.offense_description.value }}</textarea>
+        </div>
+
+        <label for="action_desired">Action Desired:</label><br>
+        <div class="input-group mb-3">
+            <textarea class="form-control" rows="3" id="action_desired" name="action_desired">{{ form.action_desired.value }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-secondary">Submit</button>
+    </form>
+{% endblock %}

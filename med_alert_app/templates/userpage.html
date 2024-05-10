@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if complete == 1 %}
+    <div class="container">
+        <div class="alert alert-success mt-4" role="alert">
+            <h2 class="alert-heading text-center"> Thank You! </h2>
+            <hr>
+            <p class="text-center"> Your report has successfully been submitted! </p>
+        </div>
+    </div>
+{% endif %}
+    <div class="row">
+         <div class="row justify-content-center">
+        <div class="col-sm-12 mb-3">
+            <h4 class="text-center mb-3">This is {{ user.first_name }} {{ user.last_name }}'s page. You are a user!</h4>
+        </div>
+                <div class="text-center">
+        <button class="styled-button" style="border: #BCE9EE" >
+        <a href="{% url 'uploadfiles'  %}" class="btn btn-light btn-lg"> Make a Report </a>
+            </button>
+             <br><br>
+
+        <a href="{% url 'userviewfiles' %}" class="btn btn-light btn-lg mt-3" style="width: 300px" >View Reports</a>
+
+</div>
+</div>
+    </div>
+{% endblock %}

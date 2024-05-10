@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}View Your Reports{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <label for="statusFilter" class="col-form-label">Filter by Status:</label>
+        </div>
+        <div class="col-auto">
+            <select class="form-select" id="statusFilter">
+                <option value="all" selected>All</option>
+                <option value="new">New</option>
+                <option value="inprogress">In Progress</option>
+                <option value="resolved">Resolved</option>
+            </select>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="reportList">
+        {% for document, url in documents %}
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'report_details' report_id=document.report.id %}" class="card-link">View report made {{ document.report.upload_time }}</a>
+                    </h5>
+                    {% if document.report.completed %}
+                    <span class="badge bg-success">Status: Resolved</span>
+                    {% elif document.report.been_viewed %}
+                    <span class="badge bg-warning">Status: In Progress</span>
+                    {% else %}
+                    <span class="badge bg-danger">Status: New</span>
+                    {% endif %}
+                    <br><br>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ document.report.id }}">Delete Report</button>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Report Modal -->
+        <div class="modal fade" id="deleteModal{{ document.report.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this report?
+                    </div>
+                    <div class="modal-footer">
+                        <form action="{% url 'reportdeleted' report_id=document.report.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                            <button type="submit" class="btn btn-danger">Yes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+document.getElementById('statusFilter').addEventListener('change', function() {
+    const selectedStatus = this.value;
+    const reports = document.querySelectorAll('.col');
+
+    reports.forEach(report => {
+        const statusBadge = report.querySelector('.badge');
+        let showReport = false;
+
+        if (selectedStatus === 'all') {
+            showReport = true;
+        } else if (selectedStatus === 'new' && statusBadge.innerText.includes('New')) {
+            showReport = true;
+        } else if (selectedStatus === 'inprogress' && statusBadge.innerText.includes('In Progress')) {
+            showReport = true;
+        } else if (selectedStatus === 'resolved' && statusBadge.innerText.includes('Resolved')) {
+            showReport = true;
+        }
+
+        if (showReport) {
+            report.style.display = 'block';
+        } else {
+            report.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %}

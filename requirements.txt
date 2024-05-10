@@ -1,0 +1,17 @@
+pip
+Django
+asgiref
+sqlparse
+django-allauth
+gunicorn
+django-heroku
+dj-database-url
+django-bootstrap-v5
+python-social-auth
+social-auth-app-django
+boto3
+django-storages
+python-decouple
+pytest
+pytest-django
+pytest-cov
